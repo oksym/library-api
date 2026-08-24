@@ -1,1 +1,13 @@
 GET http://127.0.0.1:8000/api/books/
+###
+POST http://127.0.0.1:8000/api/books/
+Content-Type: application/json
+
+{
+    "title": "Dune",
+    "description": "Science fiction novel",
+    "price": "20.00",
+    "created_at": "2026-01-10",
+    "author_id": 1,
+    "category_ids": [3, 5]
+}
