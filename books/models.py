@@ -15,8 +15,10 @@ class Book(models.Model):
     description=models.TextField(blank=True, null=True)
     created_at=models.DateField()
     price=models.DecimalField(max_digits=10, decimal_places=2)
+    author= models.ForeignKey(Author, on_delete=models.PROTECT, related_name='books')
+    categories = models.ManyToManyField(Category)
 
     def __str__(self):
-        return self.title
+        return f"{self.title} by {self.author}"
 
 
