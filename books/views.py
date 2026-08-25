@@ -6,9 +6,10 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
-from .permissions import IsAdminOrReadOnly
+from .permissions import IsAdminOrReadOnly,IsOwnerOrReadOnly
 from .serializers import RegisterSerializer
 from rest_framework.generics import CreateAPIView
+from rest_framework.decorators import action
 
 
 # @api_view(["GET", "POST"])
@@ -51,11 +52,14 @@ class BookViewSet(ModelViewSet):
     serializer_class = BookSerializer
     # permission_classes = [IsAuthenticated]
     # permission_classes = [IsAuthenticatedOrReadOnly]
-    permission_classes = [IsAdminOrReadOnly]
+    # permission_classes = [IsAdminOrReadOnly] #custom
+    permission_classes=[IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly]
 
     def perform_create(self, serializer):
-        book = serializer.save()
-        print(f"Created book: {book.title}")
+        # book = serializer.save()
+        # print(f"Created book: {book.title}")
+        serializer.save(owner=self.request.user)
+
 
     def get_queryset(self):
         queryset = Book.objects.all()
@@ -67,6 +71,7 @@ class BookViewSet(ModelViewSet):
         if category:
             queryset = queryset.filter(categories__id=category)
         return queryset
+
 
 
 # @api_view(["POST"])

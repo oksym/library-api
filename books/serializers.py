@@ -44,7 +44,9 @@ class BookSerializer(serializers.ModelSerializer):
             "author_id",
             "categories",
             "category_ids",
+            "owner"
         ]
+        read_only_fields = ["owner"]
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)

@@ -1,16 +1,17 @@
 GET http://127.0.0.1:8000/api/books/
-#Authorization: Bearer {{ access }}
+Authorization: Bearer {{ access }}
 ###
 POST http://127.0.0.1:8000/api/books/
+Authorization: Bearer {{access}}
 Content-Type: application/json
 
 {
-    "title": "War and war",
-    "description": "A novel",
-    "price": "30.00",
-    "created_at": "2026-01-10",
-    "author_id": 3,
-    "category_ids": [4]}
+    "title": "Narnia",
+    "description": "popular book",
+    "price": "37.00",
+    "created_at": "2025-09-16",
+    "author_id": 1,
+    "category_ids": [3]}
 ###
 GET http://127.0.0.1:8000/api/books/5/
 ###
@@ -26,12 +27,13 @@ Content-Type: application/json
     "category_ids": [3, 5]
 }
 ###
-PATCH http://127.0.0.1:8000/api/books/5/
+PATCH http://127.0.0.1:8000/api/books/11/
+Authorization: Bearer {{access}}
 Content-Type: application/json
 
 {
 
-    "price": "35.00"
+    "price": "66.00"
 
 }
 ###
@@ -48,10 +50,4 @@ Content-Type: application/json
     "password": "123"
 }
 ###
-POST http://127.0.0.1:8000/api/register/
-Content-Type: application/json
 
-{
-    "username": "milomir",
-    "password": "123"
-}
