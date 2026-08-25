@@ -5,7 +5,10 @@ from .serializers import BookSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
-
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from .permissions import IsAdminOrReadOnly
+from .serializers import RegisterSerializer
+from rest_framework.generics import CreateAPIView
 
 
 # @api_view(["GET", "POST"])
@@ -46,7 +49,9 @@ from rest_framework.viewsets import ModelViewSet
 class BookViewSet(ModelViewSet):
     queryset=Book.objects.all()
     serializer_class = BookSerializer
-
+    # permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAdminOrReadOnly]
 
     def perform_create(self, serializer):
         book = serializer.save()
@@ -62,3 +67,21 @@ class BookViewSet(ModelViewSet):
         if category:
             queryset = queryset.filter(categories__id=category)
         return queryset
+
+
+# @api_view(["POST"])
+# def register(request):
+#     serializer = RegisterSerializer(data=request.data)
+#     if serializer.is_valid():
+#         serializer.save()
+#         return Response(
+#             serializer.data,
+#             status=status.HTTP_201_CREATED
+#         )
+#     return Response(
+#         serializer.errors,
+#         status=status.HTTP_400_BAD_REQUEST
+#     )
+
+class RegisterView(CreateAPIView):
+    serializer_class = RegisterSerializer

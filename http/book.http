@@ -35,7 +35,8 @@ Content-Type: application/json
 
 }
 ###
-DELETE http://127.0.0.1:8000/api/books/7/
+DELETE http://127.0.0.1:8000/api/books/6/
+Authorization: Bearer {{access}}
 ###
 GET http://127.0.0.1:8000/api/books/?category=2&author=3
 ###
@@ -43,6 +44,14 @@ POST http://127.0.0.1:8000/api/token/
 Content-Type: application/json
 
 {
-    "username": "misko",
+    "username": "milomir",
+    "password": "123"
+}
+###
+POST http://127.0.0.1:8000/api/register/
+Content-Type: application/json
+
+{
+    "username": "milomir",
     "password": "123"
 }
