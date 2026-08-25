@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from rest_framework.decorators import api_view
 from .models import Book
-from .serializers import BookSerializer
+from .serializers import BookSerializer,CategorySerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
@@ -72,7 +72,19 @@ class BookViewSet(ModelViewSet):
             queryset = queryset.filter(categories__id=category)
         return queryset
 
+    @action(detail=False, methods=["GET"])
+    def expensive(self, request):
+        # books = Book.objects.filter(price__gt=50)
+        # serializer = BookSerializer(books, many=True)
+        books = self.get_queryset().filter(price__gt=100)
+        serializer = self.get_serializer(books, many=True)
+        return Response(serializer.data)
 
+    @action(detail=True, methods=["GET"])
+    def categories(self, request, pk=None):
+        book = self.get_object()
+        serializer = CategorySerializer(book.categories.all(), many=True)
+        return Response(serializer.data)
 
 # @api_view(["POST"])
 # def register(request):
