@@ -10,6 +10,7 @@ from .permissions import IsAdminOrReadOnly,IsOwnerOrReadOnly
 from .serializers import RegisterSerializer
 from rest_framework.generics import CreateAPIView
 from rest_framework.decorators import action
+from rest_framework.filters import SearchFilter, OrderingFilter
 
 
 # @api_view(["GET", "POST"])
@@ -85,6 +86,10 @@ class BookViewSet(ModelViewSet):
         book = self.get_object()
         serializer = CategorySerializer(book.categories.all(), many=True)
         return Response(serializer.data)
+
+    filter_backends = [SearchFilter,OrderingFilter]
+    search_fields = ["title", "description", "author__name"]
+    ordering_fields = ["title", "price", "date"]
 
 # @api_view(["POST"])
 # def register(request):
