@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'books','rest_framework',
+    'books',
+    'rest_framework',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -144,6 +146,8 @@ REST_FRAMEWORK = {
         "DEFAULT_FILTER_BACKENDS": [
             "rest_framework.filters.SearchFilter",
         ],
+    "DEFAULT_SCHEMA_CLASS":
+        "drf_spectacular.openapi.AutoSchema",
 }
 
 

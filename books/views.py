@@ -107,3 +107,6 @@ class BookViewSet(ModelViewSet):
 
 class RegisterView(CreateAPIView):
     serializer_class = RegisterSerializer
+
+def home(request):
+    return render(request,'home.html')
